@@ -48,6 +48,8 @@ class JWTAuthenticationBackend(AuthenticationBackend):
 
         auth = request.headers["Authorization"]
         token = self.get_token_from_header(authorization=auth, prefix=self.prefix)
+        if token == 'undefined':
+            return
         try:
             payload = jwt.decode(token, key=self.secret_key)
         except jwt.InvalidTokenError as e:
